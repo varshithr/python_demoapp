@@ -1,0 +1,18 @@
+(lp0
+S'TradeDate'
+p1
+aS'Exchange'
+p2
+aS'Symbol'
+p3
+aS'Buy/Sell'
+p4
+aS'Price'
+p5
+aS'Quantity'
+p6
+aS'Our Count'
+p7
+aS'Exchange Count'
+p8
+a.

@@ -1,0 +1,34 @@
+--1ST DONE
+SELECT E.NAME AS EMPLOYEE,E.Salary AS EMPLOYEE_SALARY,B.NAME AS BOSS,B.Salary AS BOSS_SALARY FROM tblEmployee E
+LEFT JOIN tblEmployee B
+ON E.BOSSID = B.ID
+WHERE E.Salary > B.Salary
+
+--2ND DONE
+SELECT E.Name AS EMPLOYEE,E.Salary AS SALARY,D.DepartmentName FROM tblEmployee E
+ JOIN tblDepartment D
+ON E.DepartmentId = D.ID
+WHERE E.Salary IN (SELECT MAX(Salary) FROM tblEmployee GROUP BY DepartmentId)
+ORDER BY D.DepartmentName
+
+
+--3RD DONE
+SELECT D.DepartmentName,COUNT(*) FROM tblEmployee E
+ JOIN tblDepartment D
+ON E.DepartmentId = D.ID
+GROUP BY D.DepartmentName
+HAVING COUNT(*) < 3
+
+--4TH DONE
+SELECT D.DepartmentName,COUNT(*) AS LIST_OF_PEOPLE FROM tblEmployee E
+ JOIN tblDepartment D
+ON E.DepartmentId = D.ID
+GROUP BY D.DepartmentName
+
+--5th DONE
+SELECT E.Name AS EMPLOYEE,B.Name AS BOSS,DE.DepartmentName AS EMP_DEPT,DB.DepartmentName AS BOSS_DEPT FROM tblEmployee E
+ JOIN tblEmployee B ON E.BOSSID = B.ID
+ JOIN tblDepartment DE ON E.DEPARTMENTID = DE.ID
+ JOIN tblDepartment DB ON B.DepartmentId = DB.ID
+ WHERE DB.DepartmentName != DE.DepartmentName
+ ORDER BY DE.DepartmentName

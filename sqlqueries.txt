@@ -1,0 +1,66 @@
+create table Departments(
+  DepartmentID number(2,0),
+  Name  varchar2(14),
+  constraint pk_dept primary key (DepartmentID)
+);
+
+create table Employees(
+  EmployeeID    number(4,0),
+  Name    varchar2(10),
+  BossID      number(4,0),
+  Salary      number(7,2),
+  DepartmentID   number(2,0),
+  constraint pk_emp primary key (EmployeeID),
+  constraint fk_deptno foreign key (DepartmentID) references Departments (DepartmentID)
+);
+
+insert into Departments
+values(10, 'ACCOUNTING');
+insert into Departments
+values(20, 'RESEARCH');
+insert into Departments
+values(30, 'SALES');
+insert into Departments
+values(40, 'OPERATIONS');
+
+insert into Employees
+values(
+ 7839, 'KING',  null,
+ 5000, 10
+);
+insert into Employees
+values(
+ 7698, 'BLAKE', 7839,
+ 2850, 30
+);
+insert into Employees
+values(
+ 7782, 'CLARK', 7839,
+ 2450, 10
+);
+insert into Employees
+values(
+ 7566, 'JONES', 7839,
+ 2975, 20
+);
+insert into Employees
+values(
+ 7788, 'SCOTT', 7566,
+ 3000, 20
+);
+
+1. select e.Name from Employees e, Employees m where e.BossID = m.EmployeeID and e.Salary > m.Salary;
+
+2. select e.Name,e.DepartmentID from Employees e where e.Salary in
+ (select max(Salary) from Employees group by DepartmentID) ; 
+
+3. select d.Name from Departments d where (select count(*) from Employees e where e.DepartmentID = d.DepartmentID) < 3
+
+4. select Departments.Name, count(*) as Count from Employees inner join Departments on Employees.DepartmentID = Departments.DepartmentID group by Departments.Name
+
+5. select e.Name as 'Employee Name', e2.Name as 'Boss', d.Name as "Employee Department", d2.Name as "Boss Department" from Employees e
+join Employees e2 on e.BossID = e2.EmployeeID
+join Departments d on e.DepartmentID = d.DepartmentID
+join Departments d2 on e2.DepartmentID = d2.DepartmentID
+where e.BossID != 0 
+and d.DepartmentID != d2.DepartmentID
